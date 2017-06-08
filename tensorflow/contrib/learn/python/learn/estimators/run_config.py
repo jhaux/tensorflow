@@ -152,7 +152,9 @@ class ClusterConfig(object):
       self._is_chief = (self._task_type == TaskType.WORKER and
                         self._task_id == 0)
 
-    self._evaluation_master = evaluation_master or ''
+    self._evaluation_master = (master if master is not None else
+                    _get_master(self._cluster_spec, self._task_type,
+                                self._task_id) or '')
 
   @property
   def cluster_spec(self):
